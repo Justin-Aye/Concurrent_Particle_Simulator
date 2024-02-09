@@ -1,1 +1,1 @@
-# Particle Simulator using Java, Swing, and IntelliJ
+# Particle Simulator
