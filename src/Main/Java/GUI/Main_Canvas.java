@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main_Canvas extends JFrame {
 
-    private Particle_Panel particlePanel;
+    private Animation_Panel particlePanel;
     private Control_Panel controlPanel;
     private JSplitPane splitPane;
 
@@ -29,7 +29,7 @@ public class Main_Canvas extends JFrame {
 
         setIconImage(new ImageIcon(url).getImage());
 
-        particlePanel = new Particle_Panel(sr, executor);
+        particlePanel = new Animation_Panel(sr, executor);
         controlPanel = new Control_Panel(sr, executor, particlePanel);
 
         splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -47,7 +47,7 @@ public class Main_Canvas extends JFrame {
             @Override
             public void windowClosed(WindowEvent e) {
                 super.windowClosed(e);
-                executor.shutdown();
+                executor.shutdownNow();
                 try {
                     if (!executor.awaitTermination(60, TimeUnit.SECONDS)) {
                         executor.shutdownNow();
