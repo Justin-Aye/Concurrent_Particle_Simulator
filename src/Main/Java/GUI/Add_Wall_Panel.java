@@ -1,18 +1,15 @@
 package Main.Java.GUI;
 
 import Main.Java.Classes.SharedResources;
-import Main.Java.Classes.Wall;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Add_Wall_Panel extends JPanel{
-    private JTextField x1, y1, x2, y2;
-    private JButton addBtn, clearBtn;
+    JTextField x1, y1, x2, y2;
+    JButton addBtn, clearBtn;
+
     Add_Wall_Panel(SharedResources sr){
 
         BorderLayout b_layout = new BorderLayout();
@@ -46,25 +43,7 @@ public class Add_Wall_Panel extends JPanel{
 
         JPanel btnPanel = new JPanel(new GridLayout(2, 1));
         btnPanel.add((addBtn = new JButton("Add")));
-        addBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sr.Add_Wall(new Wall(
-                        Integer.parseInt(x1.getText()),
-                        Integer.parseInt(x2.getText()),
-                        Integer.parseInt(y1.getText()),
-                        Integer.parseInt(y2.getText())
-                ));
-            }
-        });
-
         btnPanel.add((clearBtn = new JButton("Clear")));
-        clearBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sr.Clear_Walls();
-            }
-        });
 
         add(btnPanel, BorderLayout.SOUTH);
     }

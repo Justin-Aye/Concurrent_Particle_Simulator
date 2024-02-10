@@ -2,21 +2,81 @@ package Main.Java.GUI;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutorService;
-
+import Main.Java.Classes.Particle;
 import Main.Java.Classes.SharedResources;
+import Main.Java.Classes.Wall;
 
 public class Control_Panel extends JPanel {
 
-    private SharedResources sharedResources;
+    private Add_Particle_Panel topPanel;
+    private Add_Wall_Panel bottomPanel;
 
     Control_Panel(SharedResources sr, ExecutorService executor, JPanel p){
 
         setBackground(Color.BLACK);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        sharedResources = sr;
 
-        add(new Add_Particle_Panel(sr, executor));
-        add(new Add_Wall_Panel(sr));
+        topPanel = new Add_Particle_Panel(sr);
+
+        // Add Particles Button
+        topPanel.addButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                float s = Float.parseFloat(topPanel.speed.getText());
+                int a = Integer.parseInt(topPanel.angle.getText());
+                int c = Integer.parseInt(topPanel.count.getText());
+
+                if(c > 0)
+                    executor.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            for(int i = 0; i < c; i++) {
+                                try {
+                                    Thread.sleep(500);
+                                    sr.Add_Particle(new Particle(s, a, 5));
+                                } catch (Exception exception) {
+                                    // throw new RuntimeException(exception);
+                                    exception.printStackTrace();
+                                }
+                            }
+                        }
+                    });
+            }
+        });
+
+        // Clear Particles Button
+        topPanel.clrButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sr.Clear_Particles();
+            }
+        });
+
+        add(topPanel);
+
+        bottomPanel = new Add_Wall_Panel(sr);
+        bottomPanel.addBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sr.Add_Wall(new Wall(
+                        Integer.parseInt(bottomPanel.x1.getText()),
+                        Integer.parseInt(bottomPanel.x2.getText()),
+                        Integer.parseInt(bottomPanel.y1.getText()),
+                        Integer.parseInt(bottomPanel.y2.getText())
+                ));
+            }
+        });
+
+        bottomPanel.clearBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                sr.Clear_Walls();
+            }
+        });
+
+        add(bottomPanel);
     }
 }

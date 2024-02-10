@@ -1,21 +1,16 @@
 package Main.Java.GUI;
 
-import Main.Java.Classes.Particle;
 import Main.Java.Classes.SharedResources;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.concurrent.ExecutorService;
 
 class Add_Particle_Panel extends JPanel{
-    private final JTextField speed, angle, count, x1, y1, x2, y2, theta_1, theta_2, v1, v2;
-    private final ExecutorService executor;
-    Add_Particle_Panel(SharedResources sr, ExecutorService e){
-        executor = e;
+    final JTextField speed, angle, count, x1, y1, x2, y2, theta_1, theta_2, v1, v2;
+    final JButton addButton, clrButton;
+
+    Add_Particle_Panel(SharedResources sr){
         setLayout(new GridBagLayout());
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 1), "Add Particle"),
@@ -109,53 +104,13 @@ class Add_Particle_Panel extends JPanel{
         gbc.gridy++;
         gbc.gridx = 0;
         gbc.gridwidth = 2;
-        JButton addBtn;
-        add((addBtn = new JButton("Add")), gbc);
-        addBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                float s = Float.parseFloat(speed.getText());
-                int a = Integer.parseInt(angle.getText());
-                int c = Integer.parseInt(count.getText());
-
-                System.out.println("COUNT: " + c);
-                if(c > 0)
-                    executor.execute(new Runnable() {
-                        @Override
-                        public void run() {
-                            for(int i = 0; i < c; i++) {
-                                try {
-                                    Thread.sleep(500);
-                                    sr.Add_Particle(new Particle(s, a, 5));
-                                } catch (Exception exception) {
-                                    throw new RuntimeException(exception);
-                                }
-                            }
-                        }
-                    });
-
-
-//                else
-//                    executor.execute(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            sr.Add_Particle(new Particle(s, a, 5));
-//                        }
-//                    });
-
-            }
-        });
+        addButton = new JButton("Add");
+        add(addButton, gbc);
 
         gbc.gridy++;
         gbc.gridx = 0;
         gbc.gridwidth = 2;
-        JButton clearBtn;
-        add((clearBtn = new JButton("Clear")), gbc);
-        clearBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sr.Clear_Particles();
-            }
-        });
+        clrButton = new JButton("Clear");
+        add(clrButton, gbc);
     }
 }
