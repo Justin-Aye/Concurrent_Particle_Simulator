@@ -8,8 +8,6 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.concurrent.*;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
 
     private static Main_Canvas canvas;
@@ -18,10 +16,10 @@ public class Main {
 
     public static void main(String[] args) {
 
-        final int min_threads = 1;
-        final int max_threads = 32;
-        final int live_time = 60;
-        final TimeUnit timeUnit = TimeUnit.SECONDS;
+        // final int min_threads = 1;
+        // final int live_time = 60;
+        // final TimeUnit timeUnit = TimeUnit.SECONDS;
+        final int max_threads = Runtime.getRuntime().availableProcessors();
 
         ExecutorService executor = Executors.newFixedThreadPool(max_threads);
 

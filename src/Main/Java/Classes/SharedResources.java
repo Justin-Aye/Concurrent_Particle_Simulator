@@ -1,12 +1,10 @@
 package Main.Java.Classes;
 
 import java.util.ArrayList;
-import java.util.concurrent.Semaphore;
 
 public class SharedResources {
     private final ArrayList<Particle> particles;
     private final ArrayList<Wall> walls;
-    private Semaphore lock;
 
     public SharedResources(){
         particles = new ArrayList<>();
