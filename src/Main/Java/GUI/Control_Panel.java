@@ -13,11 +13,15 @@ public class Control_Panel extends JPanel {
 
     private Add_Particle_Panel topPanel;
     private Add_Wall_Panel bottomPanel;
+    FPS_Panel fps_counter;
 
     Control_Panel(SharedResources sr, ExecutorService executor, JPanel p){
 
         setBackground(Color.BLACK);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+
+        fps_counter = new FPS_Panel();
+        add(fps_counter);
 
         topPanel = new Add_Particle_Panel(sr);
 
@@ -26,24 +30,29 @@ public class Control_Panel extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 float s = Float.parseFloat(topPanel.speed.getText());
-                int a = Integer.parseInt(topPanel.angle.getText());
+                float a = Integer.parseInt(topPanel.angle.getText());
                 int c = Integer.parseInt(topPanel.count.getText());
+                int theta_1 = Integer.parseInt(topPanel.theta_1.getText());
+                int theta_2 = Integer.parseInt(topPanel.theta_1.getText());
 
-                if(c > 0)
+                if(theta_1 != 0 && theta_2 != 0){}
+
+                if(c > 0){
                     executor.execute(new Runnable() {
                         @Override
                         public void run() {
                             for(int i = 0; i < c; i++) {
                                 try {
-                                    Thread.sleep(500);
-                                    sr.Add_Particle(new Particle(s, a, 5));
+                                    Thread.sleep(100);
+                                    sr.Add_Particle(new Particle(s, a + (i*10), 5));
                                 } catch (Exception exception) {
-                                    // throw new RuntimeException(exception);
                                     exception.printStackTrace();
                                 }
                             }
                         }
                     });
+                }
+                    
             }
         });
 
