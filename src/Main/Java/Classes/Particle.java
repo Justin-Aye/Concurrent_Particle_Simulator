@@ -7,8 +7,19 @@ public class Particle {
     private float angle;
 
     public Particle(float s, float a, int d){
-        this.x = 200;
-        this.y = 200;
+        this.x = 640;
+        this.y = 360;
+        this.diameter = d;
+        this.speed = s;
+        this.angle = a % 360;
+
+        this.x_speed = (float) (s * Math.cos(Math.toRadians(angle)));
+        this.y_speed = (float) (s * Math.sin(Math.toRadians(angle)));
+    }
+
+    public Particle(int x, int y, float s, float a, int d){
+        this.x = x;
+        this.y = y;
         this.diameter = d;
         this.speed = s;
         this.angle = a % 360;
