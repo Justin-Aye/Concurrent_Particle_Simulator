@@ -45,7 +45,7 @@ class Add_Particle_Panel extends JPanel{
         gbc.gridwidth = 2;
 
         GridLayout gap_layout = new GridLayout(2, 4);
-        gap_layout.setVgap(10);
+        gap_layout.setVgap(5);
         JPanel gap_Panel = new JPanel();
         gap_Panel.setLayout(gap_layout);
         gap_Panel.setBorder(
@@ -68,7 +68,7 @@ class Add_Particle_Panel extends JPanel{
         gbc.gridy++;
         gbc.gridx = 0;
         GridLayout angle_layout = new GridLayout(2, 4);
-        angle_layout.setVgap(10);
+        angle_layout.setVgap(5);
         JPanel angle_Panel = new JPanel();
         angle_Panel.setLayout(angle_layout);
         angle_Panel.setBorder(
@@ -86,7 +86,7 @@ class Add_Particle_Panel extends JPanel{
         gbc.gridy++;
         gbc.gridx = 0;
         GridLayout velocity_layout = new GridLayout(2, 4);
-        velocity_layout.setVgap(10);
+        velocity_layout.setVgap(5);
         JPanel Velocity_Panel = new JPanel();
         Velocity_Panel.setLayout(velocity_layout);
         Velocity_Panel.setBorder(
