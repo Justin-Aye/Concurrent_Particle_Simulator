@@ -8,58 +8,74 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
+import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 
 public class Animation_Panel extends JPanel implements ActionListener {
 
-    Timer timer;
-    private final int FRAME_RATE = 17;
-    private int width, height;
-    private ArrayList<Particle> particles;
-    private SharedResources sharedResources;
-    private final ArrayList<Wall> walls;
+    private Timer timer, fpsTimer;
+    private final int width = 1280, height = 720;
+    private final int FRAME_RATE = 15;
     private final ExecutorService executor;
+    private CopyOnWriteArrayList<Wall> walls;
+    private CopyOnWriteArrayList<Particle> particles;
 
-    Animation_Panel(SharedResources sr, ExecutorService executor){
-        setMinimumSize(new Dimension(500, 500));
+    private int frameCount =  0;
+    private JLabel fps_counter;
+
+    Animation_Panel(SharedResources sr, ExecutorService e, JLabel fps){
+        setPreferredSize(new Dimension(1280, 720));
+        setMinimumSize(new Dimension(1280, 720));
         setBackground(Color.BLACK);
-        particles = sr.getParticles();
-        sharedResources = sr;
+
         walls = sr.getWalls();
-        this.executor = executor;
+        particles = sr.getParticles();
+        
+        executor = e;
+        fps_counter = fps;
+
         timer = new Timer(FRAME_RATE, this);
         timer.start();
+
+        fpsTimer = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                fps_counter.setText(String.valueOf(frameCount * 2));
+                frameCount =  0;
+            }
+        });
+        fpsTimer.start();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        this.height = getHeight();
-        this.width = getWidth();
-    }
 
-    public void paint(Graphics g){
-        super.paint(g);
+        super.paintComponent(g);
         Graphics2D new_g = (Graphics2D) g;
         new_g.setColor(Color.WHITE);
 
-        for (Wall w : walls){
-            new_g.drawLine(w.getX1(), w.getY1(), w.getX2(), w.getY2());
+        synchronized (particles){
+            for (Particle p : particles){
+                new_g.drawOval(p.getX(), p.getY(), p.getDiameter(), p.getDiameter());
+            }
         }
 
-        for (Particle p : sharedResources.getParticles()){
-            new_g.drawOval(p.getX(), p.getY(), p.getDiameter(), p.getDiameter());
+        synchronized(walls){
+            for (Wall w : walls){
+                new_g.drawLine(w.getX1(), w.getY1(), w.getX2(), w.getY2());
+            }
         }
+
+        frameCount++;
     }
 
     @Override
     public void actionPerformed(ActionEvent e){
-        for (Particle particle : sharedResources.getParticles()) {
-            executor.execute(new Runnable() {
-                @Override
-                public void run() {
-                    // If particle hits walls of the frame
+
+        for (Particle particle : particles) {
+            executor.submit(() -> {
+                synchronized(particle) {
+                    // Check if particle hits walls of the panel
                     if (particle.getX() >= width-particle.getDiameter()/2 || particle.getX() <= particle.getDiameter()/2)
                         particle.setX_speed(-1 * particle.getX_speed());
 
@@ -71,7 +87,7 @@ public class Animation_Panel extends JPanel implements ActionListener {
                         for (Wall w : walls){
                             if(w.is_Colliding(particle.getFutureX((float)(FRAME_RATE / 1000.0)), particle.getFutureY((float)(FRAME_RATE / 1000.0)))){
 
-                                float nx = (float) (Math.sin(w.getAngle()));
+                                float nx = (float) Math.sin(w.getAngle());
                                 float ny = (float) Math.cos(w.getAngle());
 
                                 float dot = particle.getX_speed() * nx + particle.getY_speed() * ny;
@@ -86,7 +102,7 @@ public class Animation_Panel extends JPanel implements ActionListener {
                         }
 
                     particle.updateXY();
-                }
+                } 
             });
         };
 
