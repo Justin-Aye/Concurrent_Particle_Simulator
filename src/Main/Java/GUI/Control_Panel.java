@@ -42,8 +42,8 @@ public class Control_Panel extends JPanel {
 
                 // For Form 2
                 int theta_1 = Integer.parseInt(topPanel.theta_1.getText());
-                int theta_2 = Integer.parseInt(topPanel.theta_1.getText());
-                boolean isForm2 = theta_1 != 0 && theta_2 != 0;
+                int theta_2 = Integer.parseInt(topPanel.theta_2.getText());
+                boolean isForm2 = (theta_1 != 0 || theta_2 != 0);
 
                 // For Form 3
                 int v1 = Integer.parseInt(topPanel.v1.getText());
@@ -69,10 +69,12 @@ public class Control_Panel extends JPanel {
 
                             // Second Form
                             else if (isForm2) {
+                                float interval = (float) Math.abs(theta_2 - theta_1) / c;
                                 for(int i = 0; i < c; i++) {
                                     try {
                                         Thread.sleep(100);
-                                        sr.Add_Particle(new Particle(s, a + (i*10), 5));
+                                        System.out.println(theta_1 + interval*i);
+                                        sr.Add_Particle(new Particle(s, (theta_1 + interval*(i+1)), 5));
                                     } catch (Exception exception) {
                                         exception.printStackTrace();
                                     }
