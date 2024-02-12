@@ -7,110 +7,115 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 class Add_Particle_Panel extends JPanel{
-    final JTextField speed, angle, count, x1, y1, x2, y2, theta_1, theta_2, v1, v2;
-    final JButton addButton, clrButton;
+        public JTextField speed, angle, count, x1, y1, x2, y2, theta_1, theta_2, v1, v2;
+        public final JComboBox<String> forms = new JComboBox<>(new String[]{"Form 1", "Form 2", "Form 3"});
+        public final JButton addButton, clrButton;
 
-    Add_Particle_Panel(SharedResources sr, int form) {
-        setLayout(new GridBagLayout());
-        setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 1), "Add Particle"),
-                new EmptyBorder(10, 0, 10, 0)
-        ));
+        Add_Particle_Panel(SharedResources sr, int form) {
+                setLayout(new GridBagLayout());
+                setBorder(BorderFactory.createCompoundBorder(
+                        BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 1), "Add Particle"),
+                        new EmptyBorder(0, 0, 10, 0)
+                ));
 
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.insets = new Insets(5, 5, 5, 5);
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.anchor = GridBagConstraints.WEST;
+                GridBagConstraints gbc = new GridBagConstraints();    
+                gbc.gridy = 0;
+                gbc.gridx = 0;
+                // gbc.gridwidth = 2;
+                JPanel formPanel = new JPanel(new GridLayout(1, 1));
+                formPanel.add(forms);
+                add(formPanel, gbc);
+                
+                gbc.gridy++;
+                gbc.gridx = 0;
+                gbc.gridwidth = 1;
+                gbc.insets = new Insets(5, 5, 5, 5);
+                gbc.anchor = GridBagConstraints.WEST;
 
-        add(new JLabel("Enter Speed: "), gbc);
-        gbc.gridy++;
-        add(new JLabel("Enter Angle: "), gbc);
-        gbc.gridy++;
-        add(new JLabel("Count: "), gbc);
+                add(new JLabel("Enter Speed: "), gbc);
+                gbc.gridy++;
+                add(new JLabel("Enter Angle: "), gbc);
+                gbc.gridy++;
+                add(new JLabel("Count: "), gbc);
 
-        gbc.gridx++;
-        gbc.gridy = 0;
-        gbc.weightx = 0.5;
-        gbc.fill = GridBagConstraints.HORIZONTAL;
+                gbc.gridx++;
+                gbc.gridy = 1;
+                gbc.weightx = 0.5;
+                gbc.fill = GridBagConstraints.HORIZONTAL;
 
-        add((speed = new RoundJTextField(10)), gbc);
-        gbc.gridy++;
-        add((angle = new RoundJTextField(10)), gbc);
-        gbc.gridy++;
-        add((count = new RoundJTextField(10)), gbc);
+                add((speed = new RoundJTextField(10)), gbc);
+                gbc.gridy++;
+                add((angle = new RoundJTextField(10)), gbc);
+                gbc.gridy++;
+                add((count = new RoundJTextField(10)), gbc);
 
-        gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.gridwidth = 2;
+                // Determines which additional forms are to be displayed
+                gbc.gridy++;
+                gbc.gridx = 0;
+                gbc.gridwidth = 2;
 
-        GridLayout gap_layout = new GridLayout(2, 4);
-        gap_layout.setVgap(5);
-        JPanel gap_Panel = new JPanel();
-        gap_Panel.setLayout(gap_layout);
-        gap_Panel.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 1), "Set Start and End Points"),
-                        new EmptyBorder(10, 0, 10, 0)
-                )
-        );
-        gap_Panel.add(new JLabel("X1: ", JLabel.CENTER));
-        gap_Panel.add(x1 = new RoundJTextField(5));
-        gap_Panel.add(new JLabel("Y1: ", JLabel.CENTER));
-        gap_Panel.add(y1 = new RoundJTextField(5));
-        gap_Panel.add(new JLabel("X2: ", JLabel.CENTER));
-        gap_Panel.add(x2 = new RoundJTextField(5));
-        gap_Panel.add(new JLabel("Y2: ", JLabel.CENTER));
-        gap_Panel.add(y2 = new RoundJTextField(5));
+                GridLayout layout = new GridLayout(2, 4);
+                layout.setVgap(5);
+                JPanel panel = new JPanel();
+                
+                switch (form) {
+                        // Form 2
+                        case 2:
+                                panel.setBorder(
+                                                BorderFactory.createCompoundBorder(
+                                                        BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 1), "Set Start and End Angle"),
+                                                        new EmptyBorder(10, 0, 10, 0)
+                                                )
+                                        );
+                                panel.add(new JLabel("Start θ: ", JLabel.CENTER));
+                                panel.add(theta_1 = new RoundJTextField(5));
+                                panel.add(new JLabel("End θ: ", JLabel.CENTER));
+                                panel.add(theta_2 = new RoundJTextField(5));
+                                break;
 
-        add(gap_Panel, gbc);
+                        // Form 3
+                        case 3:
+                                panel.setBorder(
+                                        BorderFactory.createCompoundBorder(
+                                                BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 1), "Set Start and End Speed"),
+                                                new EmptyBorder(10, 0, 10, 0)
+                                        )
+                                );
+                                panel.add(new JLabel("Start Velocity: ", JLabel.CENTER));
+                                panel.add(v1 = new RoundJTextField(5));
+                                panel.add(new JLabel("End Velocity: ", JLabel.CENTER));
+                                panel.add(v2 = new RoundJTextField(5));
+                                break;
 
-        gbc.gridy++;
-        gbc.gridx = 0;
-        GridLayout angle_layout = new GridLayout(2, 4);
-        angle_layout.setVgap(5);
-        JPanel angle_Panel = new JPanel();
-        angle_Panel.setLayout(angle_layout);
-        angle_Panel.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 1), "Set Start and End Angle"),
-                        new EmptyBorder(10, 0, 10, 0)
-                )
-        );
-        angle_Panel.add(new JLabel("Start θ: ", JLabel.CENTER));
-        angle_Panel.add(theta_1 = new RoundJTextField(5));
-        angle_Panel.add(new JLabel("End θ: ", JLabel.CENTER));
-        angle_Panel.add(theta_2 = new RoundJTextField(5));
-        add(angle_Panel, gbc);
+                        // Form 1 or Default Mode:
+                        default:
+                                panel.setLayout(layout);
+                                panel.setBorder(
+                                        BorderFactory.createCompoundBorder(
+                                                BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 1), "Set Start and End Points"),
+                                                new EmptyBorder(10, 0, 10, 0)
+                                        )
+                                );
+                                panel.add(new JLabel("<html>X<sub>1</sub></html>", JLabel.CENTER));
+                                panel.add(x1 = new RoundJTextField(5));
+                                panel.add(new JLabel("<html>Y<sub>1</sub></html>", JLabel.CENTER));
+                                panel.add(y1 = new RoundJTextField(5));
+                                panel.add(new JLabel("<html>X<sub>2</sub></html>", JLabel.CENTER));
+                                panel.add(x2 = new RoundJTextField(5));
+                                panel.add(new JLabel("<html>Y<sub>2</sub></html>", JLabel.CENTER));
+                                panel.add(y2 = new RoundJTextField(5));
+                }
 
-        gbc.gridy++;
-        gbc.gridx = 0;
-        GridLayout velocity_layout = new GridLayout(2, 4);
-        velocity_layout.setVgap(5);
-        JPanel Velocity_Panel = new JPanel();
-        Velocity_Panel.setLayout(velocity_layout);
-        Velocity_Panel.setBorder(
-                BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 1), "Set Start and End Speed"),
-                        new EmptyBorder(10, 0, 10, 0)
-                )
-        );
-        Velocity_Panel.add(new JLabel("Start V: ", JLabel.CENTER));
-        Velocity_Panel.add(v1 = new RoundJTextField(5));
-        Velocity_Panel.add(new JLabel("End V: ", JLabel.CENTER));
-        Velocity_Panel.add(v2 = new RoundJTextField(5));
-        add(Velocity_Panel, gbc);
+                panel.setLayout(layout);
+                add(panel, gbc);
 
-        gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.gridwidth = 2;
-        addButton = new JButton("Add");
-        add(addButton, gbc);
-
-        gbc.gridy++;
-        gbc.gridx = 0;
-        gbc.gridwidth = 2;
-        clrButton = new JButton("Clear");
-        add(clrButton, gbc);
-    }
+                // Add and Clear Buttons
+                gbc.gridy++;
+                gbc.gridx = 0;
+                gbc.gridwidth = 2;
+                JPanel btnPanel = new JPanel(new GridLayout(2, 1));
+                btnPanel.add((addButton = new JButton("Add")));
+                btnPanel.add((clrButton = new JButton("Clear")));
+                add(btnPanel, gbc);
+        }
 }

@@ -27,16 +27,16 @@ public class Add_Wall_Panel extends JPanel{
         grid_layout.setVgap(5);
         JPanel top = new JPanel(grid_layout);
 
-        top.add(new JLabel("X1: ", JLabel.CENTER));
+        top.add(new JLabel("<html>X<sub>1</sub></html>", JLabel.CENTER));
         top.add((x1 = new RoundJTextField(5)));
 
-        top.add(new JLabel("Y1: ", JLabel.CENTER));
+        top.add(new JLabel("<html>Y<sub>1</sub></html>", JLabel.CENTER));
         top.add((y1 = new RoundJTextField(5)));
 
-        top.add(new JLabel("X2: ", JLabel.CENTER));
+        top.add(new JLabel("<html>X<sub>2</sub></html>", JLabel.CENTER));
         top.add((x2 = new RoundJTextField(5)));
 
-        top.add(new JLabel("Y2: ", JLabel.CENTER));
+        top.add(new JLabel("<html>Y<sub>2</sub></html>", JLabel.CENTER));
         top.add((y2 = new RoundJTextField(5)));
 
         add(top, BorderLayout.NORTH);

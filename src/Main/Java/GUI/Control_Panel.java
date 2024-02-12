@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 import java.util.concurrent.ExecutorService;
 import Main.Java.Classes.Particle;
 import Main.Java.Classes.SharedResources;
@@ -15,15 +17,33 @@ public class Control_Panel extends JPanel {
     private Add_Wall_Panel bottomPanel;
     FPS_Panel fps_counter;
 
-    Control_Panel(SharedResources sr, ExecutorService executor, JPanel p){
-
+    Control_Panel(SharedResources sr, ExecutorService executor, JPanel p) {
         setBackground(Color.BLACK);
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 
+        // Add FPS Counter
         fps_counter = new FPS_Panel();
         add(fps_counter);
 
+        // Add Top Panel
         topPanel = new Add_Particle_Panel(sr, 1);
+
+        // Add Forms Dropdown
+        topPanel.forms.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String form = (String) e.getItem();
+                    if (form.equals("Form 1")) {
+                        topPanel = new Add_Particle_Panel(sr, 1);
+                    } else if (form.equals("Form 2")) {
+                        topPanel = new Add_Particle_Panel(sr, 2);
+                    } else if (form.equals("Form 3")) {
+                        topPanel = new Add_Particle_Panel(sr, 3);
+                    }
+                }
+            }
+        });
 
         // Add Particles Button
         topPanel.addButton.addActionListener(new ActionListener() {
@@ -107,7 +127,10 @@ public class Control_Panel extends JPanel {
 
         add(topPanel);
 
+        // Add Bottom Panel
         bottomPanel = new Add_Wall_Panel(sr);
+
+        // Add Wall Button
         bottomPanel.addBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -120,6 +143,7 @@ public class Control_Panel extends JPanel {
             }
         });
 
+        // Clear Wall Button
         bottomPanel.clearBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
