@@ -57,10 +57,12 @@ public class Control_Panel extends JPanel {
                         public void run() {
                             // First Form
                             if (isForm1) {
+                                int [][] particles = getDistance(x1,y1,x2,y2,c);
+            
                                 for(int i = 0; i < c; i++) {
                                     try {
                                         Thread.sleep(100);
-                                        sr.Add_Particle(new Particle(s, a + (i*10), 5));
+                                        sr.Add_Particle(new Particle(particles[i][i], particles[i][i+1], s, a + (i*10), 5));
                                     } catch (Exception exception) {
                                         exception.printStackTrace();
                                     }
@@ -131,4 +133,30 @@ public class Control_Panel extends JPanel {
 
         add(bottomPanel);
     }
+
+    public int[][] getDistance(double x1, double y1, double x2, double y2, int n_Particles){
+         //Calculate distance
+        double distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+
+        //Calculate fixed distance between particles
+        double hiwalay = distance/(n_Particles-1);
+
+        //Get start and end points of each particle
+        int[][] particles = new int[n_Particles][n_Particles];
+
+        for (int i = 0; i < n_Particles; i++) {
+            // Calculate the position of each particle along the line segment
+            double ratio = hiwalay * i;
+            double x = x1 + ratio * (x2 - x1);
+            double y = y1 + ratio * (y2 - y1);
+
+            //add start and end here
+            particles[i][i] = (int)x;
+            particles[i][i+1] = (int)y;
+        }
+
+        return particles;
+    }
+
+    
 }
