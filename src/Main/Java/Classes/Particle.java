@@ -4,9 +4,9 @@ public class Particle {
     private int x, y, diameter;
     private float x_speed, y_speed;
     private final float speed;
-    private int angle;
+    private float angle;
 
-    public Particle(float s, int a, int d){
+    public Particle(float s, float a, int d){
         this.x = 200;
         this.y = 200;
         this.diameter = d;
