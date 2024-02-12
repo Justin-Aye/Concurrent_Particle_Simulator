@@ -13,7 +13,6 @@ public class Wall {
         Y2 = y2;
 
         angle = (float) (Math.atan2((y2 - y1), (x2 - x1)));
-        System.out.println("ANGLE " + Math.toDegrees(angle));
     }
 
     public boolean is_Colliding(int x, int y){
