@@ -23,7 +23,7 @@ public class Control_Panel extends JPanel {
         fps_counter = new FPS_Panel();
         add(fps_counter);
 
-        topPanel = new Add_Particle_Panel(sr);
+        topPanel = new Add_Particle_Panel(sr, 1);
 
         // Add Particles Button
         topPanel.addButton.addActionListener(new ActionListener() {
@@ -55,27 +55,40 @@ public class Control_Panel extends JPanel {
                     executor.execute(new Runnable() {
                         @Override
                         public void run() {
-                            for(int i = 0; i < c; i++) {
-                                try {
-                                    Thread.sleep(100);
-                                    
-                                    // First Form
-                                    if (isForm1) {
+                            // First Form
+                            if (isForm1) {
+                                for(int i = 0; i < c; i++) {
+                                    try {
+                                        Thread.sleep(100);
                                         sr.Add_Particle(new Particle(s, a + (i*10), 5));
+                                    } catch (Exception exception) {
+                                        exception.printStackTrace();
                                     }
+                                }
+                            }
 
-                                    // Second Form
-                                    else if (isForm2) {
+                            // Second Form
+                            else if (isForm2) {
+                                for(int i = 0; i < c; i++) {
+                                    try {
+                                        Thread.sleep(100);
                                         sr.Add_Particle(new Particle(s, a + (i*10), 5));
+                                    } catch (Exception exception) {
+                                        exception.printStackTrace();
                                     }
+                                }
+                                
+                            }
 
-                                    // Third Form
-                                    else if (isForm3) {
+                            // Third Form
+                            else if (isForm3) {
+                                for(int i = 0; i < c; i++) {
+                                    try {
+                                        Thread.sleep(100);
                                         sr.Add_Particle(new Particle(s, a + (i*10), 5));
+                                    } catch (Exception exception) {
+                                        exception.printStackTrace();
                                     }
-
-                                } catch (Exception exception) {
-                                    exception.printStackTrace();
                                 }
                             }
                         }

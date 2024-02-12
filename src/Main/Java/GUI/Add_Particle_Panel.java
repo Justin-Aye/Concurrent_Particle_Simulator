@@ -10,7 +10,7 @@ class Add_Particle_Panel extends JPanel{
     final JTextField speed, angle, count, x1, y1, x2, y2, theta_1, theta_2, v1, v2;
     final JButton addButton, clrButton;
 
-    Add_Particle_Panel(SharedResources sr){
+    Add_Particle_Panel(SharedResources sr, int form) {
         setLayout(new GridBagLayout());
         setBorder(BorderFactory.createCompoundBorder(
                 BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 1), "Add Particle"),
