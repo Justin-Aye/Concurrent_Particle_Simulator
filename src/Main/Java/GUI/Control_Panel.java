@@ -61,7 +61,7 @@ public class Control_Panel extends JPanel {
                                 for(int i = 0; i < c; i++) {
                                     try {
                                         Thread.sleep(100);
-                                        sr.Add_Particle(new Particle(particles[i][0], particles[i][1], s, a + (i*10), 5));
+                                        sr.Add_Particle(new Particle(particles[i][0], particles[i][1], s, a, 5));
                                     } catch (Exception exception) {
                                         exception.printStackTrace();
                                     }
