@@ -4,7 +4,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import Main.Java.Classes.Particle;
 import Main.Java.Classes.SharedResources;
@@ -59,12 +58,6 @@ public class Control_Panel extends JPanel {
                             // First Form
                             if (isForm1) {
                                 int [][] particles = getDistance(x1,y1,x2,y2,c);
-                                for (int i = 0; i< c; i++) {
-                                    for (int j = 0; j< 2; j++) {
-                                        System.out.print(particles[i][j] + " ");
-                                    }
-                                    System.out.println();
-                                }
                                 for(int i = 0; i < c; i++) {
                                     try {
                                         Thread.sleep(100);
@@ -141,18 +134,14 @@ public class Control_Panel extends JPanel {
     }
 
     public int[][] getDistance(double x1, double y1, double x2, double y2, int n_Particles){
-         //Calculate distance
-        double distance = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-
-        //Calculate fixed distance between particles
-        double hiwalay = distance/(n_Particles-1);
-
         //Get start and end points of each particle
         int[][] particles = new int[n_Particles][2];
-      
+
+        //Determine sthe change between x and y coordinates
         double dx = (double) (x2 - x1) / (n_Particles - 1);
         double dy = (double) (y2 - y1) / (n_Particles - 1);
 
+        //Incrementally increments dx and dy per particle
         for (int i = 0; i < n_Particles; i++) {
             particles[i][0] = (int) (x1 + i * dx);
             particles[i][1] = (int) (y1 + i * dy);
