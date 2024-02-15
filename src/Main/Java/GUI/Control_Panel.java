@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import java.util.concurrent.ExecutorService;
 import Main.Java.Classes.Particle;
 import Main.Java.Classes.SharedResources;
@@ -58,11 +59,16 @@ public class Control_Panel extends JPanel {
                             // First Form
                             if (isForm1) {
                                 int [][] particles = getDistance(x1,y1,x2,y2,c);
-            
+                                for (int i = 0; i< c; i++) {
+                                    for (int j = 0; j< 2; j++) {
+                                        System.out.print(particles[i][j] + " ");
+                                    }
+                                    System.out.println();
+                                }
                                 for(int i = 0; i < c; i++) {
                                     try {
                                         Thread.sleep(100);
-                                        sr.Add_Particle(new Particle(particles[i][i], particles[i][i+1], s, a + (i*10), 5));
+                                        sr.Add_Particle(new Particle(particles[i][0], particles[i][1], s, a + (i*10), 5));
                                     } catch (Exception exception) {
                                         exception.printStackTrace();
                                     }
@@ -142,17 +148,14 @@ public class Control_Panel extends JPanel {
         double hiwalay = distance/(n_Particles-1);
 
         //Get start and end points of each particle
-        int[][] particles = new int[n_Particles][n_Particles];
+        int[][] particles = new int[n_Particles][2];
+      
+        double dx = (double) (x2 - x1) / (n_Particles - 1);
+        double dy = (double) (y2 - y1) / (n_Particles - 1);
 
         for (int i = 0; i < n_Particles; i++) {
-            // Calculate the position of each particle along the line segment
-            double ratio = hiwalay * i;
-            double x = x1 + ratio * (x2 - x1);
-            double y = y1 + ratio * (y2 - y1);
-
-            //add start and end here
-            particles[i][i] = (int)x;
-            particles[i][i+1] = (int)y;
+            particles[i][0] = (int) (x1 + i * dx);
+            particles[i][1] = (int) (y1 + i * dy);
         }
 
         return particles;
