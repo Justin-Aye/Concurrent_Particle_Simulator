@@ -238,38 +238,48 @@ public class AddParticlePanel extends Panel {
                 addButton("Add Particles in Batches", new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        executor.execute(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    float start = Float.parseFloat(AddParticlePanel.this.start.getText());
-                                    float end = Float.parseFloat(AddParticlePanel.this.end.getText());
-                                    int count = Integer.parseInt(AddParticlePanel.this.count.getText());
 
-                                    // Get the Final Values to avoid the final modifier
-                                    int finalX = Integer.parseInt(x.getText());
-                                    int finalY = Integer.parseInt(y.getText());
-                                    float finalSpeed = Float.parseFloat(speed.getText());
-                                    float finalAngle = Float.parseFloat(angle.getText());
+                        float start = Float.parseFloat(AddParticlePanel.this.start.getText());
+                        float end = Float.parseFloat(AddParticlePanel.this.end.getText());
+                        int count = Integer.parseInt(AddParticlePanel.this.count.getText());
 
-                                    switch (form) {
-                                        // Add the Special Form 2
-                                        case 2:
-                                            float diff = (end - start) / (count - 1);
+                        // Get the Final Values to avoid the final modifier
+                        int finalX = Integer.parseInt(x.getText());
+                        int finalY = Integer.parseInt(y.getText());
+                        float finalSpeed = Float.parseFloat(speed.getText());
+                        float finalAngle = Float.parseFloat(angle.getText());
+
+                        switch (form) {
+                            // Add the Special Form 2
+                            case 2:
+                                executor.execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
+                                            float interval = (end - start) / count;
                                             float currentAngle = start;
 
                                             for (int i = count; i > 0; i--) {
                                                 synchronized(resources) {
                                                     resources.addParticle(new Particle(finalX, finalY, finalSpeed, currentAngle));
-                                                    System.out.println(currentAngle);
-                                                    currentAngle += diff;
+                                                    currentAngle += interval;
                                                     Thread.sleep(INTERVAL);
                                                 }
                                             }
-                                            break;
-                                        
-                                        // Add the Special Form 3
-                                        case 3:
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                });
+                                
+                                break;
+                            
+                            // Add the Special Form 3
+                            case 3:
+                                executor.execute(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        try {
                                             float step = (end - start) / (count - 1);
                                             float currentSpeed = start;
                                             
@@ -280,32 +290,64 @@ public class AddParticlePanel extends Panel {
                                                     Thread.sleep(INTERVAL);
                                                 }
                                             }
-                                            break;
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }   
+                                    }
+                                    
+                                });
+                                
+                                break;
 
-                                        // Add the Special Form 1 or the Default Form 
-                                        default:
+                            // Add the Special Form 1 or the Default Form 
+                            default:
+                                executor.execute(new Runnable() {
+                                    @Override
+                                    public void run(){
+                                        System.out.println("HEERE");
+                                        try {
                                             int x1 = Integer.parseInt(AddParticlePanel.this.start.getText());
-                                            int y1 = Integer.parseInt(AddParticlePanel.this.end.getText());
-
-                                            int x2 = Integer.parseInt(AddParticlePanel.this.start2.getText());
+                                            int y1 = Integer.parseInt(AddParticlePanel.this.start2.getText());
+                                            int x2 = Integer.parseInt(AddParticlePanel.this.end.getText());
                                             int y2 = Integer.parseInt(AddParticlePanel.this.end2.getText());
+                                            int [][] particles = getDistance((float)x1, (float)y1, (float)x2, (float)y2, count);
 
-                                            for (int i = count; i > 0; i--) {
+                                            for (int i = 0; i < count; i++) {
                                                 synchronized(resources) {
-                                                    resources.addParticle(new Particle(finalX, finalY, finalSpeed, finalAngle));
+                                                    
+                                                    resources.addParticle(new Particle(particles[i][0], particles[i][1], finalSpeed, finalAngle));
                                                     Thread.sleep(INTERVAL);
                                                 }
-                                            }
-                                            break;
+                                            }        
+                                        } catch (Exception e) {
+                                            e.printStackTrace();
+                                        }
                                     }
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
+                                });
+                                break;
+                        }
                     }
                 });
             }
         }
+    }
+
+    public int[][] getDistance(float x1, float y1, float x2, float y2, int n_Particles){
+        //Get start and end points of each particle
+        int[][] particles = new int[n_Particles][2];
+
+        //Determine sthe change between x and y coordinates
+        float dx = (float) (x2 - x1) / (n_Particles);
+        float dy = (float) (y2 - y1) / (n_Particles);
+
+        System.out.println("X: " + x1 + " X: " + x2 + " Diff: " + (x2-x1));
+        System.out.println("X: " + dx + " Y: " + dy);
+        //Incrementally increments dx and dy per particle
+        for (int i = 0; i < n_Particles; i++) {
+            particles[i][0] = (int) (x1 + i * dx);
+            particles[i][1] = (int) (y1 + i * dy);
+        }
+
+        return particles;
     }
 }
