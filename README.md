@@ -22,3 +22,11 @@ Additionally, a user can also add walls, given two endpoints
 of.
 
 Ensure that your screen resolution is high enough to show all particles on-screen. Show the FPS counter on-screen every 0.5 seconds.
+
+## Running Locally
+1. Clone the repository
+```bash
+git clone https://github.com/Justin-Aye/Concurrent_Particle_Simulator.git
+```
+2. Open the project in your preferred IDE
+3. Run the Main.java file
