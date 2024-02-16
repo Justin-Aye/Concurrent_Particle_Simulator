@@ -304,7 +304,6 @@ public class AddParticlePanel extends Panel {
                                 executor.execute(new Runnable() {
                                     @Override
                                     public void run(){
-                                        System.out.println("HEERE");
                                         try {
                                             int x1 = Integer.parseInt(AddParticlePanel.this.start.getText());
                                             int y1 = Integer.parseInt(AddParticlePanel.this.start2.getText());
@@ -340,8 +339,6 @@ public class AddParticlePanel extends Panel {
         float dx = (float) (x2 - x1) / (n_Particles);
         float dy = (float) (y2 - y1) / (n_Particles);
 
-        System.out.println("X: " + x1 + " X: " + x2 + " Diff: " + (x2-x1));
-        System.out.println("X: " + dx + " Y: " + dy);
         //Incrementally increments dx and dy per particle
         for (int i = 0; i < n_Particles; i++) {
             particles[i][0] = (int) (x1 + i * dx);
