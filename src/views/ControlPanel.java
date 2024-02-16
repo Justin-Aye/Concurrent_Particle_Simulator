@@ -1,9 +1,8 @@
 package views;
 
 import java.awt.BorderLayout;
-
+import java.awt.Dimension;
 import java.util.concurrent.ExecutorService;
-
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -26,6 +25,7 @@ public class ControlPanel extends JPanel {
     public ControlPanel(ExecutorService executor, Resources resources) {
         // Set the Layout of the panel
         setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(250, 720));
 
         // Add the FPS Panel
         add(fps, BorderLayout.NORTH);

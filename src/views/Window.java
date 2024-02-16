@@ -2,13 +2,10 @@ package views;
 
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
-
-import java.awt.FlowLayout;
+import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-
 import java.util.concurrent.ExecutorService;
-
 import models.Resources;
 
 /**
@@ -41,10 +38,7 @@ public class Window extends JFrame {
         setResizable(false);
         
         // Set the layout of the window
-        setLayout(new FlowLayout());
-        
-        // Set the window to be visible
-        setVisible(true);
+        setLayout(new BorderLayout());
 
         // Close everything when X is clicked
         addWindowListener(new WindowAdapter() {
@@ -56,19 +50,20 @@ public class Window extends JFrame {
             }
         });
 
-        // Create the a Split Pane for the Sim Panel and Control Panel
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setDividerLocation(SimPanel.WIDTH);
-
-        // Create the Control Panel
+        // Create the Control and Simulation Panel
         ControlPanel controlPanel = new ControlPanel(executor, resources);
-        splitPane.add(controlPanel, JSplitPane.RIGHT);
-
-        // Create the Sim Panel
         SimPanel simPanel = new SimPanel(executor, resources, controlPanel);
-        splitPane.add(simPanel, JSplitPane.LEFT);
+
+        // Create the a Split Pane for the Sim Panel and Control Panel
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, simPanel, controlPanel);
+        splitPane.setDividerLocation(SimPanel.WIDTH);
+        splitPane.setDividerSize(0);
 
         // Add the split pane to the window
-        setContentPane(splitPane);
+        add(splitPane, BorderLayout.CENTER);
+
+        // Set the window to be visible
+        pack();
+        setVisible(true);
     }
 }
