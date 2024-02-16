@@ -1,6 +1,9 @@
 package models;
 
 public class Wall {
+    // The threshold for collision
+    private final static float COLLISION_THRESHOLD = 10.0f;
+
     // The position of the Wall in the Screen
     private final int x1;
     private final int x2;
@@ -41,17 +44,15 @@ public class Wall {
 
         this.angle = (float) Math.atan2((this.y2 - this.y1), (this.x2 - this.x1));
     }
-
     public boolean hasCollided(int x, int y) {
-        float d1 = (float) (Math.sqrt(Math.pow(x1 - x, 2) + (Math.pow(y1 - y, 2))));      // A to C
-
-        float d2 = (float) (Math.sqrt(Math.pow(x2 - x, 2) + (Math.pow(y2 - y, 2))));      // B to C
-
-        float d3 = (float) (Math.sqrt(Math.pow(x1 - x2, 2) + (Math.pow(y1 - y2, 2))));    // A to B
-
-        return ((d1 + d2) >= d3 * 0.999 && (d1 + d2) <= d3 * 1.005);
+        float d1 = (float) Math.sqrt(Math.pow(x1 - x, 2) + Math.pow(y1 - y, 2)); // Distance from A to C
+        float d2 = (float) Math.sqrt(Math.pow(x2 - x, 2) + Math.pow(y2 - y, 2)); // Distance from B to C
+        float d3 = (float) Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2)); // Distance from A to B
+    
+        // Check if the sum of distances d1 and d2 is approximately equal to the distance between A and B
+        return Math.abs(d1 + d2 - d3) < 0.005;
     }
-
+    
     public int getX1() {
         return this.x1;
     }

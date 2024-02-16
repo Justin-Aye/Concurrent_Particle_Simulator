@@ -113,7 +113,7 @@ public class SimPanel extends JPanel implements ActionListener  {
                     // Check if particle hits walls
                     else {
                         for (Wall w : walls){
-                            if(w.hasCollided(particle.getFutureX((float) (FRAME_RATE / 1000.0)), particle.getFutureY((float) (FRAME_RATE / 1000.0)))){
+                            if(w.hasCollided(particle.getFutureX((float) (FRAME_RATE / 1000)), particle.getFutureY((float) (FRAME_RATE / 1000)))) {
 
                                 float newX = (float) Math.sin(w.getAngle());
                                 float newY = (float) Math.cos(w.getAngle());
