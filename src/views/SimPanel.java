@@ -6,13 +6,10 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
-
 import javax.swing.JPanel;
 import javax.swing.Timer;
-
 import models.Particle;
 import models.Resources;
 import models.Wall;
@@ -50,7 +47,7 @@ public class SimPanel extends JPanel implements ActionListener  {
 
         // Set the preferred size of the panel
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        setMinimumSize(new Dimension(WIDTH, HEIGHT));
+        setMinimumSize(new Dimension(WIDTH, HEIGHT));        
 
         // Set the Initial Frame Count
         frameCount = 0;
@@ -69,6 +66,7 @@ public class SimPanel extends JPanel implements ActionListener  {
         });
         fps.start();
     }
+
 
     @Override
     protected void paintComponent(Graphics g) {
@@ -102,11 +100,11 @@ public class SimPanel extends JPanel implements ActionListener  {
                     int dia = Particle.DIAMETER;
 
                     // // Check if particle hits walls of the SimPanel
-                    if (particle.getX() - dia / 2 <= 0 || particle.getX() + dia / 2 >= (SimPanel.WIDTH - dia)) {
+                    if (particle.getX() - (dia / 2) <= 0 || particle.getX() + (dia / 2) >= (SimPanel.WIDTH)) {
                         particle.setVelocityX(-particle.getVelocityX());
                     }
                     
-                    if (particle.getY() - dia / 2 <= 0 || particle.getY() + dia / 2 >= (SimPanel.HEIGHT - (dia * 7))) {
+                    if (particle.getY() - (dia / 2) <= 0 || particle.getY() + (dia / 2) >= (SimPanel.HEIGHT)) {
                         particle.setVelocityY(-particle.getVelocityY());
                     }
 
