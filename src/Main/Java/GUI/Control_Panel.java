@@ -61,7 +61,7 @@ public class Control_Panel extends JPanel {
                                 for(int i = 0; i < c; i++) {
                                     try {
                                         Thread.sleep(100);
-                                        sr.Add_Particle(new Particle(particles[i][0], particles[i][1], s, a + (i*10), 5));
+                                        sr.Add_Particle(new Particle(particles[i][0], 720 - particles[i][1], s, a, 5));
                                     } catch (Exception exception) {
                                         exception.printStackTrace();
                                     }
@@ -74,7 +74,6 @@ public class Control_Panel extends JPanel {
                                 for(int i = 0; i < c; i++) {
                                     try {
                                         Thread.sleep(100);
-                                        System.out.println(theta_1 + interval*i);
                                         sr.Add_Particle(new Particle(s, (theta_1 + interval*(i+1)), 5));
                                     } catch (Exception exception) {
                                         exception.printStackTrace();
@@ -117,8 +116,8 @@ public class Control_Panel extends JPanel {
                 sr.Add_Wall(new Wall(
                         Integer.parseInt(bottomPanel.x1.getText()),
                         Integer.parseInt(bottomPanel.x2.getText()),
-                        Integer.parseInt(bottomPanel.y1.getText()),
-                        Integer.parseInt(bottomPanel.y2.getText())
+                        720 - Integer.parseInt(bottomPanel.y1.getText()),
+                        720 - Integer.parseInt(bottomPanel.y2.getText())
                 ));
             }
         });
