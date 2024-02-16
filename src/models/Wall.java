@@ -56,7 +56,7 @@ public class Wall {
         float d2 = (float) (Math.sqrt(Math.pow(x2 - x, 2) + (Math.pow(y2 - y, 2))));      // B to C	 
         float d3 = (float) (Math.sqrt(Math.pow(x1 - x2, 2) + (Math.pow(y1 - y2, 2))));    // A to B	 
 
-        return ((d1 + d2) >= d3 * 0.999 && (d1 + d2) <= d3 * 1.005);
+        return ((d1 + d2) >= d3 * 0.999 && (d1 + d2) <= d3 * 1.001);
     }
     
     public int getX1() {
