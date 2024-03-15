@@ -5,6 +5,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.SwingUtilities;
+
 import models.Resources;
 import models.Wall;
 
@@ -57,7 +60,13 @@ public class AddWallPanel extends Panel {
             addButton("Add Wall", new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    resources.addWall(new Wall(x1.getText(), y1.getText(), x2.getText(), y2.getText()));
+                    // resources.addWall(new Wall(x1.getText(), y1.getText(), x2.getText(), y2.getText()));
+                    JButton button = (JButton)e.getSource();
+                    // Find the parent window of the button
+                    Window window = (Window) SwingUtilities.windowForComponent(button);
+                    // Dispose the window
+                    window.dispose();
+                    Explorer_Window w = new Explorer_Window(null, resources);
                 }
             });
 
