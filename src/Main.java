@@ -4,7 +4,7 @@ import java.util.concurrent.Executors;
 import javax.swing.SwingUtilities;
 
 import models.Resources;
-import views.Window;
+import views.dev_mode.Window;
 
 public class Main {
     // Max Threads

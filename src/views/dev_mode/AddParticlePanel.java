@@ -1,4 +1,4 @@
-package views;
+package views.dev_mode;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 
 import models.Particle;
 import models.Resources;
+import views.Panel;
 
 public class AddParticlePanel extends Panel {
     // The Title of the Panel

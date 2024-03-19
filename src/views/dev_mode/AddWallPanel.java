@@ -1,15 +1,18 @@
-package views;
+package views.dev_mode;
 
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.ExecutorService;
 
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
 
 import models.Resources;
 import models.Wall;
+import views.Panel;
+import views.explore_mode.Explorer_Window;
 
 public class AddWallPanel extends Panel {
 
@@ -18,13 +21,15 @@ public class AddWallPanel extends Panel {
     private InputField x1, x2, y1, y2;
 
     private Resources resources;
+    private ExecutorService executor;
 
-    public AddWallPanel(Resources resources) {
+    public AddWallPanel(Resources resources, ExecutorService executor) {
         // Call the Panel constructor
         super(PANEL_TITLE, new BorderLayout());
 
         // Set the Resources
         this.resources = resources;
+        this.executor = executor;
 
         // Add the Input Panel
         add(new InputPanel(), BorderLayout.NORTH);
@@ -66,7 +71,7 @@ public class AddWallPanel extends Panel {
                     Window window = (Window) SwingUtilities.windowForComponent(button);
                     // Dispose the window
                     window.dispose();
-                    Explorer_Window w = new Explorer_Window(null, resources);
+                    Explorer_Window w = new Explorer_Window(executor, resources);
                 }
             });
 

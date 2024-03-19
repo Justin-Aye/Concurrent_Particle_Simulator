@@ -1,4 +1,4 @@
-package views;
+package views.dev_mode;
 
 import java.awt.Shape;
 import java.awt.Graphics;

@@ -1,4 +1,4 @@
-package views;
+package views.dev_mode;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -34,7 +34,7 @@ public class ControlPanel extends JPanel {
         add(new AddParticlePanel(executor, resources), BorderLayout.CENTER);
 
         // Add the Add Wall Panel
-        add(new AddWallPanel(resources), BorderLayout.SOUTH);
+        add(new AddWallPanel(resources, executor), BorderLayout.SOUTH);
     }
 
     /**
