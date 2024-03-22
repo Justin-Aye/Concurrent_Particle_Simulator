@@ -1,6 +1,6 @@
 package models;
 
-import views.dev_mode.SimPanel;
+import views.SimPanel;
 
 public class Particle {
     // The size of the Particle in the Screen

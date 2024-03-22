@@ -97,44 +97,42 @@ public class Sprite {
 
     private void loadImages() {
          // Load front images
-         currentImages = new BufferedImage[currentPaths.length];
-         for (int i = 0; i < currentPaths.length; i++) {
-             try {
-                 currentImages[i] = ImageIO.read(getClass().getResource(currentPaths[i]));
-             } catch (IOException e) {
-                 e.printStackTrace();
-             }
-         }
+        currentImages = new BufferedImage[currentPaths.length];
+        for (int i = 0; i < currentPaths.length; i++) {
+            try {
+                currentImages[i] = ImageIO.read(getClass().getResource(currentPaths[i]));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
-     public Image getImage(){
-        return currentImages[currentImageIndex].getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-     }
+    public Image getImage(){
+    return currentImages[currentImageIndex].getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+    }
 
 
-     public Image pauseImage(){
-        return currentImages[0].getScaledInstance(200, 200, Image.SCALE_SMOOTH);
-     }
-     
+    public Image pauseImage(){
+    return currentImages[0].getScaledInstance(200, 200, Image.SCALE_SMOOTH);
+    }
 
-     public void walkToFront(){
+    public void walkToFront(){
         currentPaths = frontPaths;
         loadImages();
-     }
+    }
 
-     public void walkToBack(){
+    public void walkToBack(){
         currentPaths = backPaths;
         loadImages();
-     }
+    }
 
-     public void walkToLeft(){
+    public void walkToLeft(){
         currentPaths = leftPaths;
         loadImages();
-     }
+    }
 
-     public void walkToRight(){
+    public void walkToRight(){
         currentPaths = rightPaths;
         loadImages();
-     }
-
+    }
 }

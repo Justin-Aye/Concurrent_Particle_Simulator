@@ -5,20 +5,24 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
+import javax.swing.SwingUtilities;
+
 import models.Resources;
-import models.Wall;
 import views.InputField;
 import views.Panel;
+import views.Window;
+import views.explore_mode.Explorer_Window;
 
-public class AddWallPanel extends Panel {
+public class ExplorerPanel extends Panel {
 
-    private static final String PANEL_TITLE = "Add Walls";
+    private static final String PANEL_TITLE = "Explorer Mode";
 
-    private InputField x1, x2, y1, y2;
+    private InputField x, y;
 
     private Resources resources;
 
-    public AddWallPanel(Resources resources) {
+    public ExplorerPanel(Resources resources) {
         // Call the Panel constructor
         super(PANEL_TITLE, new BorderLayout());
 
@@ -39,13 +43,9 @@ public class AddWallPanel extends Panel {
         public InputPanel() {
             super(new GridLayout(2, 4, 0, 5));
 
-            x1 = addInputBar("<html>X<sub>1</sub</html>", 5);
+            x = addInputBar("X", 5);
 
-            y1 = addInputBar("<html>Y<sub>1</sub</html>", 5);
-
-            x2 = addInputBar("<html>X<sub>2</sub</html>", 5);
-
-            y2 = addInputBar("<html>Y<sub>2</sub</html>", 5);
+            y = addInputBar("Y", 5);
         }
     }
 
@@ -56,17 +56,14 @@ public class AddWallPanel extends Panel {
         public ButtonPanel() {
             super(new GridLayout(1, 2));
 
-            addButton("Add Wall", new ActionListener() {
+            addButton("Enter Explorer Mode", new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    resources.addWall(new Wall(x1.getText(), y1.getText(), x2.getText(), y2.getText()));
-                }
-            });
+                    // Dispose current Window
+                    SwingUtilities.windowForComponent((JButton) e.getSource()).dispose();
 
-            addButton("Clear Walls", new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    resources.clearWalls();
+                    // Create a new Explorer Window
+                    new Explorer_Window(null, resources);
                 }
             });
         }

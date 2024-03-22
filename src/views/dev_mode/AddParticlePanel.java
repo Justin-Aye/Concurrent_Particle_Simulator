@@ -10,6 +10,7 @@ import javax.swing.JComboBox;
 
 import models.Particle;
 import models.Resources;
+import views.InputField;
 import views.Panel;
 
 public class AddParticlePanel extends Panel {

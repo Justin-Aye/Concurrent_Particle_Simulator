@@ -1,4 +1,4 @@
-package views.dev_mode;
+package views;
 
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
@@ -45,7 +45,7 @@ public class Window extends JFrame {
             @Override
             public void windowClosed(WindowEvent e) {
                 super.windowClosed(e);
-                System.out.println("CLOSING!!!!!");
+                System.out.println("CLOSING!");
                 System.gc();
             }
         });

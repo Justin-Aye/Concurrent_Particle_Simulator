@@ -1,9 +1,6 @@
 package models;
 
 public class Wall {
-    // The threshold for collision
-    private final static float COLLISION_THRESHOLD = 10.0f;
-
     // The position of the Wall in the Screen
     private final int x1;
     private final int x2;

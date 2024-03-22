@@ -1,4 +1,4 @@
-package views.dev_mode;
+package views;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -8,12 +8,13 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import models.Resources;
+import views.dev_mode.AddParticlePanel;
+import views.dev_mode.ExplorerPanel;
 
 /**
  * The ControlPanel class is a JPanel that is used to summon particles and walls.
  */
 public class ControlPanel extends JPanel {
-
     // FPS Counter
     private FPS fps = new FPS();
 
@@ -34,7 +35,7 @@ public class ControlPanel extends JPanel {
         add(new AddParticlePanel(executor, resources), BorderLayout.CENTER);
 
         // Add the Add Wall Panel
-        add(new AddWallPanel(resources, executor), BorderLayout.SOUTH);
+        add(new ExplorerPanel(resources), BorderLayout.SOUTH);
     }
 
     /**

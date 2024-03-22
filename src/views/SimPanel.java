@@ -1,4 +1,4 @@
-package views.dev_mode;
+package views;
 
 import java.awt.Color;
 import java.awt.Dimension;

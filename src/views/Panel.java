@@ -7,8 +7,6 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import views.dev_mode.InputField;
-
 import java.awt.Color;
 import java.awt.LayoutManager;
 import java.awt.event.ActionListener;
