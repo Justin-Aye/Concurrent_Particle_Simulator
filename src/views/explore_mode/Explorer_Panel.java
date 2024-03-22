@@ -106,7 +106,7 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
             
             }
 
-            if(this.explorer.getCenter_x() + 9 > Explorer_Window.HEIGHT){
+            if(this.explorer.getCenter_y() + 9 > Explorer_Window.HEIGHT){
                 int overflow = this.explorer.getCenter_y() + 9;
                 int height = (overflow - Explorer_Window.HEIGHT) * height_ratio;
                 g2d.fillRect(0, Explorer_Window.HEIGHT - height, Explorer_Window.WIDTH, height);
