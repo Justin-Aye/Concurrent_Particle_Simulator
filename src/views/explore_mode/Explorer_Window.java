@@ -3,19 +3,16 @@ package views.explore_mode;
 import java.util.concurrent.ExecutorService;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.Border;
 
 import models.Resources;
 
 
 /**
  * The Explorer Window class is a JFrame that is used to display the explorer's POV.
+ * @deprecated - since Window.java now exists
  */
 public class Explorer_Window extends JFrame {
     
