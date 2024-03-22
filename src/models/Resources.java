@@ -6,9 +6,14 @@ public class Resources {
     private final CopyOnWriteArrayList<Particle> particles;
     private final CopyOnWriteArrayList<Wall> walls;
 
+    private int spriteX;
+    private int spriteY;
+
     public Resources() {
         particles = new CopyOnWriteArrayList<Particle>();
         walls = new CopyOnWriteArrayList<Wall>();
+        spriteX = 500;
+        spriteY = 500;
     }
 
     public CopyOnWriteArrayList<Particle> getParticles() {
@@ -37,5 +42,23 @@ public class Resources {
     public void clearWalls() {
         this.walls.clear();
         System.gc();
+    }
+
+    public void setSpriteSpawn(int x, int y) {
+        this.spriteX = x;
+        this.spriteY = y;
+    }
+
+    public void setSpriteSpawn(String x, String y) {
+        this.spriteX = Integer.parseInt(x);
+        this.spriteY = Integer.parseInt(y);
+    }
+
+    public int getSpriteX() {
+        return this.spriteX;
+    }
+
+    public int getSpriteY() {
+        return this.spriteY;
     }
 }

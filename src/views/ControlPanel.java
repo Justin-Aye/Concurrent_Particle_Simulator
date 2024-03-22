@@ -7,9 +7,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import models.Constants;
 import models.Resources;
 import views.dev_mode.AddParticlePanel;
-import views.dev_mode.ExplorerPanel;
+import views.dev_mode.EnterExplorerPanel;
+import views.explore_mode.ExplorerPanel;
 
 /**
  * The ControlPanel class is a JPanel that is used to summon particles and walls.
@@ -35,7 +37,32 @@ public class ControlPanel extends JPanel {
         add(new AddParticlePanel(executor, resources), BorderLayout.CENTER);
 
         // Add the Add Wall Panel
-        add(new ExplorerPanel(resources, executor), BorderLayout.SOUTH);
+        add(new EnterExplorerPanel(executor, resources), BorderLayout.SOUTH);
+    }
+
+    /**
+     * The ControlPanel constructor is used to create a new ControlPanel.
+     * @param executor The executor to be used.
+     * @param resources The resources to be used.
+     */
+    public ControlPanel(ExecutorService executor, Resources resources, int mode) {
+        // Set the Layout of the panel
+        setLayout(new BorderLayout());
+        setPreferredSize(new Dimension(250, 720));
+
+        // Add the FPS Panel
+        add(fps, BorderLayout.NORTH);
+
+        if (mode == Constants.DEVELOPER) {
+            // Add the Add Particle Panel
+            add(new AddParticlePanel(executor, resources), BorderLayout.CENTER);
+
+            // Add the Add Wall Panel
+            add(new EnterExplorerPanel(executor, resources), BorderLayout.SOUTH);
+        }
+        else {
+            add(new ExplorerPanel(executor, resources), BorderLayout.CENTER);
+        }
     }
 
     /**

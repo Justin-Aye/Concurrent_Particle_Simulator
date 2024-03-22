@@ -3,6 +3,7 @@ import java.util.concurrent.Executors;
 
 import javax.swing.SwingUtilities;
 
+import models.Constants;
 import models.Resources;
 import views.Window;
 
@@ -19,7 +20,7 @@ public class Main {
             Resources resources = new Resources();
             
             // Build the Body
-            new Window(executor, resources);
+            new Window(executor, resources, Constants.DEVELOPER);
         });
     }
 }

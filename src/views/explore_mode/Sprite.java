@@ -9,7 +9,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
 public class Sprite {
-
     public static BufferedImage[] currentImages;
     private int currentImageIndex = 0;
     private static String[] frontPaths = {
@@ -81,6 +80,7 @@ public class Sprite {
                 break;
         }
         loadImages();
+
         // Create Timer to change image every 1 second
         timer = new Timer(170, new ActionListener() {
             @Override
@@ -92,7 +92,7 @@ public class Sprite {
     }
 
     private void nextImage() {
-            currentImageIndex = (currentImageIndex + 1) % currentPaths.length;
+        currentImageIndex = (currentImageIndex + 1) % currentPaths.length;
     }
 
     private void loadImages() {

@@ -17,7 +17,7 @@ import models.Resources;
 /**
  * The Explorer Window class is a JFrame that is used to display the explorer's POV.
  */
-public class Explorer_Window extends JFrame{
+public class Explorer_Window extends JFrame {
     
     // Title
     public static final String TITLE = "Explorer";

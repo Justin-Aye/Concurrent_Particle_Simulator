@@ -6,6 +6,7 @@ import java.awt.BorderLayout;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.concurrent.ExecutorService;
+
 import models.Resources;
 
 /**
@@ -20,11 +21,17 @@ public class Window extends JFrame {
 
     public final static int HEIGHT = 720;
 
+    SimPanel simPanel;
+
+    ControlPanel controlPanel;
+
     /**
      * The Window constructor is used to create a new Window.
-     * @param executor - The executor to be used.
+     * @param executor - The executor to be used
+     * @param resources - The current particles in the area
+     * @param mode - Dev or Explorer
      */
-    public Window(ExecutorService executor, Resources resources) {
+    public Window(ExecutorService executor, Resources resources, int mode) {
         // Set the title of the window
         super(TITLE);
 
@@ -45,14 +52,15 @@ public class Window extends JFrame {
             @Override
             public void windowClosed(WindowEvent e) {
                 super.windowClosed(e);
-                System.out.println("CLOSING!");
                 System.gc();
             }
         });
 
-        // Create the Control and Simulation Panel
-        ControlPanel controlPanel = new ControlPanel(executor, resources);
-        SimPanel simPanel = new SimPanel(executor, resources, controlPanel);
+        // Create the Control Panel
+        this.controlPanel = new ControlPanel(executor, resources, mode);
+
+        // Create the Simulation Panel
+        this.simPanel = new SimPanel(executor, resources, controlPanel);
 
         // Create the a Split Pane for the Sim Panel and Control Panel
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, simPanel, controlPanel);
@@ -65,5 +73,65 @@ public class Window extends JFrame {
         // Set the window to be visible
         pack();
         setVisible(true);
+    }
+
+    /**
+     * The Window constructor is used to create a new Window.
+     * The Window constructor is used to create a new Window.
+     * @param executor - The executor to be used
+     * @param resources - The current particles in the area
+     * @param mode - Dev or Explorer
+     * @param panelTitle - (Optional) Panel Title
+     */
+    public Window(ExecutorService executor, Resources resources, int mode, String panelTitle) {
+        // Set the title of the window
+        super(panelTitle);
+
+        // Set the default close operation
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        // Set the size of the window
+        setSize(Window.WIDTH, Window.HEIGHT);
+
+        // Set the window to be not resizable
+        setResizable(false);
+        
+        // Set the layout of the window
+        setLayout(new BorderLayout());
+
+        // Close everything when X is clicked
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosed(WindowEvent e) {
+                super.windowClosed(e);
+                System.gc();
+            }
+        });
+
+        // Create the Control Panel
+        this.controlPanel = new ControlPanel(executor, resources, mode);
+
+        // Create the Simulation Panel
+        this.simPanel = new SimPanel(executor, resources, controlPanel);
+
+        // Create the a Split Pane for the Sim Panel and Control Panel
+        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, simPanel, controlPanel);
+        splitPane.setDividerLocation(SimPanel.WIDTH);
+        splitPane.setDividerSize(0);
+
+        // Add the split pane to the window
+        add(splitPane, BorderLayout.CENTER);
+
+        // Set the window to be visible
+        pack();
+        setVisible(true);
+    }
+
+    public SimPanel getSimPanel() {
+        return this.simPanel;
+    }
+
+    public ControlPanel getControlPanel() {
+        return this.controlPanel;
     }
 }
