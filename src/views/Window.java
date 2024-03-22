@@ -7,6 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.concurrent.ExecutorService;
 
+import models.Constants;
 import models.Resources;
 
 /**
@@ -59,16 +60,22 @@ public class Window extends JFrame {
         // Create the Control Panel
         this.controlPanel = new ControlPanel(executor, resources, mode);
 
-        // Create the Simulation Panel
-        this.simPanel = new SimPanel(executor, resources, controlPanel);
+        if (mode == Constants.DEVELOPER) {
+            // Create the Simulation Panel
+            this.simPanel = new SimPanel(executor, resources, controlPanel);
 
-        // Create the a Split Pane for the Sim Panel and Control Panel
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, simPanel, controlPanel);
-        splitPane.setDividerLocation(SimPanel.WIDTH);
-        splitPane.setDividerSize(0);
+            // Create the a Split Pane for the Sim Panel and Control Panel
+            JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, simPanel, controlPanel);
+            splitPane.setDividerLocation(SimPanel.WIDTH);
+            splitPane.setDividerSize(0);
 
-        // Add the split pane to the window
-        add(splitPane, BorderLayout.CENTER);
+            // Add the split pane to the window
+            add(splitPane, BorderLayout.CENTER);
+        }
+        else {
+            // TODO: Add the Explorer Screen
+            
+        }
 
         // Set the window to be visible
         pack();
