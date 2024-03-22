@@ -9,6 +9,8 @@ import java.util.concurrent.ExecutorService;
 
 import models.Constants;
 import models.Resources;
+import views.dev_mode.SimPanel;
+import views.explore_mode.ExplorerScreenPanel;
 
 /**
  * The Window class is a JFrame that is used to display the simulation and control panels.
@@ -21,10 +23,6 @@ public class Window extends JFrame {
     public final static int WIDTH = 1530;
 
     public final static int HEIGHT = 720;
-
-    SimPanel simPanel;
-
-    ControlPanel controlPanel;
 
     /**
      * The Window constructor is used to create a new Window.
@@ -58,11 +56,11 @@ public class Window extends JFrame {
         });
 
         // Create the Control Panel
-        this.controlPanel = new ControlPanel(executor, resources, mode);
+        ControlPanel controlPanel = new ControlPanel(executor, resources, mode);
 
         if (mode == Constants.DEVELOPER) {
             // Create the Simulation Panel
-            this.simPanel = new SimPanel(executor, resources, controlPanel);
+            SimPanel simPanel = new SimPanel(executor, resources, controlPanel);
 
             // Create the a Split Pane for the Sim Panel and Control Panel
             JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, simPanel, controlPanel);
@@ -73,8 +71,16 @@ public class Window extends JFrame {
             add(splitPane, BorderLayout.CENTER);
         }
         else {
-            // TODO: Add the Explorer Screen
-            
+            // Create the Explorer Screen Panel
+            ExplorerScreenPanel esp = new ExplorerScreenPanel(executor, resources, controlPanel);
+
+            // Create the a Split Pane for the Sim Panel and Control Panel
+            JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, esp, controlPanel);
+            splitPane.setDividerLocation(SimPanel.WIDTH);
+            splitPane.setDividerSize(0);
+
+            // Add the split pane to the window
+            add(splitPane, BorderLayout.CENTER);
         }
 
         // Set the window to be visible
@@ -116,29 +122,35 @@ public class Window extends JFrame {
         });
 
         // Create the Control Panel
-        this.controlPanel = new ControlPanel(executor, resources, mode);
+        ControlPanel controlPanel = new ControlPanel(executor, resources, mode);
 
-        // Create the Simulation Panel
-        this.simPanel = new SimPanel(executor, resources, controlPanel);
+        if (mode == Constants.DEVELOPER) {
+            // Create the Simulation Panel
+            SimPanel simPanel = new SimPanel(executor, resources, controlPanel);
 
-        // Create the a Split Pane for the Sim Panel and Control Panel
-        JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, simPanel, controlPanel);
-        splitPane.setDividerLocation(SimPanel.WIDTH);
-        splitPane.setDividerSize(0);
+            // Create the a Split Pane for the Sim Panel and Control Panel
+            JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, simPanel, controlPanel);
+            splitPane.setDividerLocation(SimPanel.WIDTH);
+            splitPane.setDividerSize(0);
 
-        // Add the split pane to the window
-        add(splitPane, BorderLayout.CENTER);
+            // Add the split pane to the window
+            add(splitPane, BorderLayout.CENTER);
+        }
+        else {
+            // Create the Explorer Screen Panel
+            ExplorerScreenPanel esp = new ExplorerScreenPanel(executor, resources, controlPanel);
+
+            // Create the a Split Pane for the Sim Panel and Control Panel
+            JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, esp, controlPanel);
+            splitPane.setDividerLocation(SimPanel.WIDTH);
+            splitPane.setDividerSize(0);
+
+            // Add the split pane to the window
+            add(splitPane, BorderLayout.CENTER);
+        }
 
         // Set the window to be visible
         pack();
         setVisible(true);
-    }
-
-    public SimPanel getSimPanel() {
-        return this.simPanel;
-    }
-
-    public ControlPanel getControlPanel() {
-        return this.controlPanel;
     }
 }

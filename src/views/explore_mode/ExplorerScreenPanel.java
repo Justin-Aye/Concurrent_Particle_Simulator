@@ -1,4 +1,4 @@
-package views;
+package views.explore_mode;
 
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,11 +13,12 @@ import javax.swing.Timer;
 import models.Particle;
 import models.Resources;
 import models.Wall;
+import views.ControlPanel;
 
 /**
  * The SimPanel class is the Main Panel that is used to display the simulation of the particles and walls.
  */
-public class SimPanel extends JPanel implements ActionListener  {
+public class ExplorerScreenPanel extends JPanel implements ActionListener  {
     // SimPanel Screen Size
     public final static int WIDTH = 1280;
     public final static int HEIGHT = 720;
@@ -34,7 +35,7 @@ public class SimPanel extends JPanel implements ActionListener  {
     private int frameCount;
     private Timer timer, fps;
 
-    public SimPanel(ExecutorService executor, Resources resources, ControlPanel controlPanel) {
+    public ExplorerScreenPanel(ExecutorService executor, Resources resources, ControlPanel controlPanel) {
         // Set The Walls and Particles
         this.walls = resources.getWalls();
         this.particles = resources.getParticles();
@@ -100,11 +101,11 @@ public class SimPanel extends JPanel implements ActionListener  {
                     int dia = Particle.DIAMETER;
 
                     // // Check if particle hits walls of the SimPanel
-                    if (particle.getX() - (dia / 2) <= 0 || particle.getX() + (dia / 2) >= (SimPanel.WIDTH)) {
+                    if (particle.getX() - (dia / 2) <= 0 || particle.getX() + (dia / 2) >= (ExplorerScreenPanel.WIDTH)) {
                         particle.setVelocityX(-particle.getVelocityX());
                     }
                     
-                    if (particle.getY() - (dia / 2) <= 0 || particle.getY() + (dia / 2) >= (SimPanel.HEIGHT)) {
+                    if (particle.getY() - (dia / 2) <= 0 || particle.getY() + (dia / 2) >= (ExplorerScreenPanel.HEIGHT)) {
                         particle.setVelocityY(-particle.getVelocityY());
                     }
 
@@ -139,3 +140,4 @@ public class SimPanel extends JPanel implements ActionListener  {
         repaint();
     }
 }
+
