@@ -1,5 +1,7 @@
 package models;
 
+import views.explore_mode.Explorer_Window;
+
 public class Explorer {
     
     // Center Point
@@ -26,7 +28,7 @@ public class Explorer {
      */
     public Explorer(int start_x, int start_y, int screen_w, int screen_h){
         this.center_x = start_x;
-        this.center_y = start_y;
+        this.center_y = 720 - start_y;
 
         this.v1_x = start_x - 16;
         this.v1_y = start_y - 9;
@@ -71,7 +73,12 @@ public class Explorer {
     }
 
     public boolean isDetected(int x, int y){
-        return x > v1_x && x < v2_x && y > v1_y && y < v2_y;
+        return (
+            x >= this.v1_x && 
+            x <= this.v2_x && 
+            y >= this.v1_y && 
+            y <= this.v2_y
+        );
     }
 
     public int getV1_x() {
