@@ -11,6 +11,7 @@ import models.Constants;
 import models.Resources;
 import views.dev_mode.SimPanel;
 import views.explore_mode.ExplorerScreenPanel;
+import views.explore_mode.Explorer_Panel;
 
 /**
  * The Window class is a JFrame that is used to display the simulation and control panels.
@@ -138,7 +139,7 @@ public class Window extends JFrame {
         }
         else {
             // Create the Explorer Screen Panel
-            ExplorerScreenPanel esp = new ExplorerScreenPanel(executor, resources, controlPanel);
+            Explorer_Panel esp = new Explorer_Panel(executor, resources);
 
             // Create the a Split Pane for the Sim Panel and Control Panel
             JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, esp, controlPanel);

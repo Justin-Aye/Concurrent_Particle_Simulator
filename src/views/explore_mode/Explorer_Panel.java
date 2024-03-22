@@ -40,13 +40,14 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
         this.particles = resources.getParticles();
 
         this.width_ratio = (int) Math.ceil(WIDTH / 33.0);
-        this.height_ratio = (int) Math.ceil(HEIGHT / 19);
+        this.height_ratio = (int) Math.ceil(HEIGHT/ 19);
         this.center_x = WIDTH / 2;
         this.center_y = HEIGHT / 2;
 
         this.explorer = new Explorer(r.getSpriteX(), r.getSpriteY(), WIDTH, HEIGHT);
         this.sprite = new Sprite("front");
         this.image = sprite.pauseImage();
+
 
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -67,8 +68,8 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
             if (keyPressed)
                 image = sprite.getImage();
             if(image != null){
-                g.drawImage(image, (this.center_x - width_ratio) - 60,  //hardcoded 
-                (this.center_y - height_ratio)-80, this); //hardcoded
+                g.drawImage(image, (this.center_x - width_ratio) - 60, 
+                (this.center_y - height_ratio)-80, this); 
             }
             
             g2d.setColor(Color.BLACK);
@@ -91,8 +92,8 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
 
             if(this.explorer.getCenter_x() + 16 > WIDTH){
                 int overflow = this.explorer.getCenter_x() + 16;
-                int width = (overflow - WIDTH) * width_ratio;
-                g2d.fillRect(WIDTH - (width), 0, width, HEIGHT);
+                int width = (overflow -WIDTH) * width_ratio;
+                g2d.fillRect(WIDTH- (width), 0, width, HEIGHT);
                 
             }
 
@@ -101,7 +102,7 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
             
             }
 
-            if(this.explorer.getCenter_y() + 9 > HEIGHT){
+            if(this.explorer.getCenter_y() + 9 >  HEIGHT){
                 int overflow = this.explorer.getCenter_y() + 9;
                 int height = (overflow - HEIGHT) * height_ratio;
                 g2d.fillRect(0, HEIGHT - height, WIDTH, height);
