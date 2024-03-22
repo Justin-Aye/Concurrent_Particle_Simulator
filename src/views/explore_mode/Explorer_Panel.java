@@ -28,6 +28,8 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
     private Image image;
     private boolean keyPressed;
     private Timer timer;
+    private final static int WIDTH = 1280;
+    private final static int HEIGHT = 720;
     private int FRAME_RATE = 15;
     private int width_ratio, height_ratio;
     private int center_x, center_y;
@@ -37,18 +39,18 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
         this.executor = e;
         this.particles = resources.getParticles();
 
-        this.width_ratio = (int) Math.ceil(Explorer_Window.WIDTH / 33.0);
-        this.height_ratio = (int) Math.ceil(Explorer_Window.HEIGHT / 19);
-        this.center_x = Explorer_Window.WIDTH / 2;
-        this.center_y = Explorer_Window.HEIGHT / 2;
+        this.width_ratio = (int) Math.ceil(WIDTH / 33.0);
+        this.height_ratio = (int) Math.ceil(HEIGHT / 19);
+        this.center_x = WIDTH / 2;
+        this.center_y = HEIGHT / 2;
 
-        this.explorer = new Explorer(1200, 650, Explorer_Window.WIDTH, Explorer_Window.HEIGHT);
+        this.explorer = new Explorer(r.getSpriteX(), r.getSpriteY(), WIDTH, HEIGHT);
         this.sprite = new Sprite("front");
         this.image = sprite.pauseImage();
 
         setBackground(Color.WHITE);
-        setPreferredSize(new Dimension(Explorer_Window.WIDTH, Explorer_Window.HEIGHT));
-        setMinimumSize(new Dimension(Explorer_Window.WIDTH, Explorer_Window.HEIGHT));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
+        setMinimumSize(new Dimension(WIDTH, HEIGHT));
 
         setFocusable(true);
         addKeyListener(this);
@@ -62,13 +64,6 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
         super.paintComponent(g);
         if (g instanceof Graphics2D) {
             Graphics2D g2d = (Graphics2D) g;
-            // g2d.setColor(Color.RED);
-            // g2d.fillRect(
-            //     this.center_x - width_ratio, 
-            //     this.center_y - height_ratio, 
-            //     width_ratio * 2 + 1, 
-            //     height_ratio * 2 + 1
-            // );
             if (keyPressed)
                 image = sprite.getImage();
             if(image != null){
@@ -79,10 +74,10 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
             g2d.setColor(Color.BLACK);
             synchronized(particles) {
                 for (Particle p : particles) {
-                    if(explorer.isDetected(p.getX(), p.getY()))
+                    if(explorer.isDetected(p.getX(), HEIGHT - p.getY()))
                         g2d.fillOval(
                             (p.getX() - explorer.getV1_x()) * width_ratio, 
-                            (p.getY() - explorer.getV1_y()) * height_ratio, 
+                            ((HEIGHT - p.getY()) - explorer.getV1_y()) * height_ratio, 
                             Particle.DIAMETER * height_ratio, 
                             Particle.DIAMETER * height_ratio
                         );
@@ -90,26 +85,26 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
             }
 
             if(this.explorer.getCenter_x() - 16 < 0){
-                g2d.fillRect(0, 0, Math.abs(this.explorer.getCenter_x() - 16)*width_ratio, Explorer_Window.HEIGHT);
+                g2d.fillRect(0, 0, Math.abs(this.explorer.getCenter_x() - 16)*width_ratio, HEIGHT);
                
             }
 
-            if(this.explorer.getCenter_x() + 16 > Explorer_Window.WIDTH){
+            if(this.explorer.getCenter_x() + 16 > WIDTH){
                 int overflow = this.explorer.getCenter_x() + 16;
-                int width = (overflow - Explorer_Window.WIDTH) * width_ratio;
-                g2d.fillRect(Explorer_Window.WIDTH - (width), 0, width, Explorer_Window.HEIGHT);
+                int width = (overflow - WIDTH) * width_ratio;
+                g2d.fillRect(WIDTH - (width), 0, width, HEIGHT);
                 
             }
 
             if(this.explorer.getCenter_y() - 9 < 0){
-                g2d.fillRect(0, 0, Explorer_Window.WIDTH, Math.abs(this.explorer.getCenter_y() - 9)*height_ratio);
+                g2d.fillRect(0, 0, WIDTH, Math.abs(this.explorer.getCenter_y() - 9)*height_ratio);
             
             }
 
-            if(this.explorer.getCenter_y() + 9 > Explorer_Window.HEIGHT){
+            if(this.explorer.getCenter_y() + 9 > HEIGHT){
                 int overflow = this.explorer.getCenter_y() + 9;
-                int height = (overflow - Explorer_Window.HEIGHT) * height_ratio;
-                g2d.fillRect(0, Explorer_Window.HEIGHT - height, Explorer_Window.WIDTH, height);
+                int height = (overflow - HEIGHT) * height_ratio;
+                g2d.fillRect(0, HEIGHT - height, WIDTH, height);
               
             }
         }
@@ -166,11 +161,11 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
                     int dia = Particle.DIAMETER;
 
                     // // Check if particle hits walls of the SimPanel
-                    if (particle.getX() - (dia / 2) <= 0 || particle.getX() + (dia / 2) >= (Explorer_Window.WIDTH)) {
+                    if (particle.getX() - (dia / 2) <= 0 || particle.getX() + (dia / 2) >= (WIDTH)) {
                         particle.setVelocityX(-particle.getVelocityX());
                     }
                     
-                    if (particle.getY() - (dia / 2) <= 0 || particle.getY() + (dia / 2) >= (Explorer_Window.HEIGHT)) {
+                    if (particle.getY() - (dia / 2) <= 0 || particle.getY() + (dia / 2) >= (HEIGHT)) {
                         particle.setVelocityY(-particle.getVelocityY());
                     }
 
