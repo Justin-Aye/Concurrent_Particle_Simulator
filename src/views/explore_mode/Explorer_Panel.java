@@ -75,13 +75,23 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
             g2d.setColor(Color.BLACK);
             synchronized(particles) {
                 for (Particle p : particles) {
-                    if(explorer.isDetected(p.getX(), HEIGHT - p.getY()))
+                    if(explorer.isDetected(p.getX(), HEIGHT - p.getY())){
+                        int x_val = (p.getX() - explorer.getV1_x()) * width_ratio;
+                        int y_val = (HEIGHT - p.getY()) - explorer.getV1_y() * height_ratio;
+
+                        if (x_val < 0)
+                            x_val = p.DIAMETER * width_ratio;
+
+                        if (y_val < 0)
+                            y_val = p.DIAMETER * height_ratio;
+
                         g2d.fillOval(
-                            (p.getX() - explorer.getV1_x()) * width_ratio, 
-                            ((HEIGHT - p.getY()) - explorer.getV1_y()) * height_ratio, 
+                            x_val, 
+                            y_val, 
                             Particle.DIAMETER * height_ratio, 
                             Particle.DIAMETER * height_ratio
                         );
+                    }
                 }
             }
 
