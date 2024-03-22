@@ -77,7 +77,7 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
                 for (Particle p : particles) {
                     if(explorer.isDetected(p.getX(), HEIGHT - p.getY())){
                         int x_val = (p.getX() - explorer.getV1_x()) * width_ratio;
-                        int y_val = (HEIGHT - p.getY()) - explorer.getV1_y() * height_ratio;
+                        int y_val = ((HEIGHT - p.getY()) - explorer.getV1_y()) * height_ratio;
 
                         if (x_val < 0)
                             x_val = p.DIAMETER * width_ratio;
