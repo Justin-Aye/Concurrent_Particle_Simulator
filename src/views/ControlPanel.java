@@ -35,7 +35,7 @@ public class ControlPanel extends JPanel {
         add(new AddParticlePanel(executor, resources), BorderLayout.CENTER);
 
         // Add the Add Wall Panel
-        add(new ExplorerPanel(resources), BorderLayout.SOUTH);
+        add(new ExplorerPanel(resources, executor), BorderLayout.SOUTH);
     }
 
     /**

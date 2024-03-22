@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.ExecutorService;
 
 import javax.swing.JButton;
 import javax.swing.SwingUtilities;
@@ -21,13 +22,15 @@ public class ExplorerPanel extends Panel {
     private InputField x, y;
 
     private Resources resources;
+    private ExecutorService executorService;
 
-    public ExplorerPanel(Resources resources) {
+    public ExplorerPanel(Resources r, ExecutorService e) {
         // Call the Panel constructor
         super(PANEL_TITLE, new BorderLayout());
 
         // Set the Resources
-        this.resources = resources;
+        this.resources = r;
+        this.executorService = e;
 
         // Add the Input Panel
         add(new InputPanel(), BorderLayout.NORTH);
@@ -63,7 +66,7 @@ public class ExplorerPanel extends Panel {
                     SwingUtilities.windowForComponent((JButton) e.getSource()).dispose();
 
                     // Create a new Explorer Window
-                    new Explorer_Window(null, resources);
+                    new Explorer_Window(executorService, resources);
                 }
             });
         }
