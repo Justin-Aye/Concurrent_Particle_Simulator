@@ -6,6 +6,8 @@ import javax.swing.Timer;
 import models.Explorer;
 import models.Particle;
 import models.Resources;
+import views.ControlPanel;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -27,14 +29,15 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
     private Sprite sprite;
     private Image image;
     private boolean keyPressed;
-    private Timer timer;
+    private int frameCount;
+    private Timer timer, fps;
     private final static int WIDTH = 1280;
     private final static int HEIGHT = 720;
     private int FRAME_RATE = 15;
     private int width_ratio, height_ratio;
     private int center_x, center_y;
 
-    public Explorer_Panel(ExecutorService e, Resources r){
+    public Explorer_Panel(ExecutorService e, Resources r, ControlPanel c){
         this.resources = r;
         this.executor = e;
         this.particles = resources.getParticles();
@@ -56,8 +59,22 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
         setFocusable(true);
         addKeyListener(this);
 
+          // Set the Initial Frame Count
+        frameCount = 0;
+
+        // Set the Timer
         timer = new Timer(FRAME_RATE, this);
         timer.start();
+
+        // Set the FPS Counter
+        fps = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                c.setFPS(frameCount * 2);
+                frameCount =  0;
+            }
+        });
+        fps.start();
     }
 
     @Override
@@ -75,24 +92,25 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
             g2d.setColor(Color.BLACK);
             synchronized(particles) {
                 for (Particle p : particles) {
-                    if(explorer.isDetected(p.getX(), HEIGHT - p.getY())){
+                    if (explorer.isDetected(p.getX(), p.getY(), Particle.DIAMETER)) {
                         int x_val = (p.getX() - explorer.getV1_x()) * width_ratio;
-                        int y_val = ((HEIGHT - p.getY()) - explorer.getV1_y()) * height_ratio;
-
+                        int y_val = (explorer.getV2_y() - p.getY()) * height_ratio;
+                
                         if (x_val < 0)
-                            x_val = p.DIAMETER * width_ratio;
-
+                            x_val = Particle.DIAMETER * width_ratio;
+                
                         if (y_val < 0)
-                            y_val = p.DIAMETER * height_ratio;
-
+                            y_val = Particle.DIAMETER * height_ratio;
+                
                         g2d.fillOval(
                             x_val, 
                             y_val, 
-                            Particle.DIAMETER * height_ratio, 
+                            Particle.DIAMETER * width_ratio, 
                             Particle.DIAMETER * height_ratio
                         );
                     }
                 }
+                
             }
 
             if(this.explorer.getCenter_x() - 16 < 0){
@@ -119,6 +137,7 @@ public class Explorer_Panel extends JPanel implements ActionListener, KeyListene
               
             }
         }
+        this.frameCount++;
     }
 
     @Override

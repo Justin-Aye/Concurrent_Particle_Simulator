@@ -1,20 +1,14 @@
 package models;
 
-import views.explore_mode.Explorer_Window;
-
 public class Explorer {
     
     // Center Point
     private int center_x;
     private int center_y;
 
-    // Top Left Vertex Point
-    private int v1_x;
-    private int v1_y;
-
-    // Bottom Right Vertex Point
-    private int v2_x;
-    private int v2_y;
+    // Periphery dimensions
+    private final int PERIPHERY_WIDTH = 33;
+    private final int PERIPHERY_HEIGHT = 19;
 
     private int screen_w;
     private int screen_h;
@@ -27,74 +21,58 @@ public class Explorer {
      * @param screen_h - Height of Screen
      */
     public Explorer(int start_x, int start_y, int screen_w, int screen_h){
-        this.center_x = start_x;
-        this.center_y = 720 - start_y;
-
-        this.v1_x = start_x - 16;
-        this.v1_y = start_y - 9;
-
-        this.v2_x = start_x + 16;
-        this.v2_y = start_y + 9;
-
         this.screen_w = screen_w;
         this.screen_h = screen_h;
+        // Adjusting coordinates such that (0,0) is at bottom-left corner
+        this.center_x = start_x;
+        this.center_y = screen_h - start_y;
     }
 
     public void move_left(){
         if(this.center_x > 0){
             this.center_x -= 1;
-            this.v1_x -= 1;
-            this.v2_x -= 1;
         }
     }
 
     public void move_right(){
         if(this.center_x < this.screen_w){
             this.center_x += 1;
-            this.v1_x += 1;
-            this.v2_x += 1;
         }
     }
 
     public void move_up(){
         if(this.center_y > 0){
             this.center_y -= 1;
-            this.v1_y -= 1;
-            this.v2_y -= 1;
         }
     }
 
     public void move_down(){
         if(this.center_y < this.screen_h){
             this.center_y += 1;
-            this.v1_y += 1;
-            this.v2_y += 1;
         }
     }
 
-    public boolean isDetected(int x, int y){
-        return (
-            x >= this.v1_x && 
-            x <= this.v2_x && 
-            y >= this.v1_y && 
-            y <= this.v2_y
-        );
+    public boolean isDetected(int x, int y, int diameter){
+        return (x + diameter >= this.center_x - PERIPHERY_WIDTH / 2 && 
+                x <= this.center_x + PERIPHERY_WIDTH / 2 &&
+                y + diameter >= this.center_y - PERIPHERY_HEIGHT / 2 && 
+                y <= this.center_y + PERIPHERY_HEIGHT / 2);
     }
 
     public int getV1_x() {
-        return v1_x;
+        return center_x - PERIPHERY_WIDTH / 2;
     }
 
     public int getV1_y() {
-        return v1_y;
+        return center_y - PERIPHERY_HEIGHT / 2;
     }
 
     public int getV2_x() {
-        return v2_x;
+        return center_x + PERIPHERY_WIDTH / 2;
     }
 
     public int getV2_y() {
-        return v2_y;
+        return center_y + PERIPHERY_HEIGHT / 2;
     }
 
     public int getCenter_x() {

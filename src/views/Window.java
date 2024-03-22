@@ -139,7 +139,7 @@ public class Window extends JFrame {
         }
         else {
             // Create the Explorer Screen Panel
-            Explorer_Panel esp = new Explorer_Panel(executor, resources);
+            Explorer_Panel esp = new Explorer_Panel(executor, resources, controlPanel);
 
             // Create the a Split Pane for the Sim Panel and Control Panel
             JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, esp, controlPanel);
